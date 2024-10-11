@@ -1,30 +1,51 @@
 import streamlit as st
+import cv2
+import numpy as np
 
-# Simple chatbot function
-def chatbot_response(user_input):
-    responses = {
-        "hello": "Hi there! How can I assist you today?",
-        "how are you?": "I'm just a program, but thanks for asking!",
-        "what is your name?": "I'm your friendly kiosk assistant!",
-        "bye": "Goodbye! Have a great day!"
-    }
-    return responses.get(user_input.lower(), "Sorry, I don't understand that.")
+# Meal recommendations based on simple criteria
+def recommend_meal():
+    meals = [
+        "Cheeseburger",
+        "Veggie Burger",
+        "Chicken Nuggets",
+        "Fries",
+        "Salad",
+        "Soda",
+        "Milkshake",
+    ]
+    return np.random.choice(meals)
 
 # Streamlit interface
-st.title("Self Kiosk with AI Assistant")
+st.title("Self Kiosk: Meal Recommendation")
 
-st.header("Welcome to the Self Kiosk")
-st.write("Ask me anything!")
+st.write("This kiosk will recommend a meal for you!")
 
-# User input
-user_input = st.text_input("You:", "")
+# Webcam input
+if st.button("Start Camera"):
+    # Initialize webcam
+    cap = cv2.VideoCapture(0)
 
-if user_input:
-    # Get the response from the chatbot
-    response = chatbot_response(user_input)
-    
-    # Display the response
-    st.write(f"Assistant: {response}")
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            st.write("Error: Could not read frame.")
+            break
+
+        # Display the frame
+        st.image(frame, channels='BGR', use_column_width=True)
+
+        # Simple human detection based on frame brightness
+        if np.mean(frame) > 100:  # Simple threshold; adjust as necessary
+            st.write("Human detected! Recommending a meal...")
+            meal = recommend_meal()
+            st.write(f"Recommended Meal: {meal}")
+            break
+
+    cap.release()
+else:
+    st.write("Click the button to start the camera.")
+
+
 
 
 
