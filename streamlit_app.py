@@ -1,48 +1,30 @@
 import streamlit as st
-import cv2
-import numpy as np
-import tensorflow as tf
 
-# Load the pre-trained models for age and gender detection
-age_model = tf.keras.models.load_model('path_to_age_model.h5')  # Update with your model path
-gender_model = tf.keras.models.load_model('path_to_gender_model.h5')  # Update with your model path
-
-# Define a function to preprocess the input image
-def preprocess_image(image):
-    # Convert to RGB and resize for the model
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    image = cv2.resize(image, (64, 64))  # Assuming the model input size is 64x64
-    image = image / 255.0  # Normalize
-    return np.expand_dims(image, axis=0)
-
-# Define a function for age and gender prediction
-def predict_age_gender(image):
-    processed_image = preprocess_image(image)
-    gender_prediction = gender_model.predict(processed_image)
-    age_prediction = age_model.predict(processed_image)
-
-    gender = 'Male' if gender_prediction[0][0] > 0.5 else 'Female'
-    age = int(age_prediction[0][0] * 100)  # Assuming output is a normalized value
-
-    return age, gender
+# Simple chatbot function
+def chatbot_response(user_input):
+    responses = {
+        "hello": "Hi there! How can I assist you today?",
+        "how are you?": "I'm just a program, but thanks for asking!",
+        "what is your name?": "I'm your friendly kiosk assistant!",
+        "bye": "Goodbye! Have a great day!"
+    }
+    return responses.get(user_input.lower(), "Sorry, I don't understand that.")
 
 # Streamlit interface
-st.title("Self Kiosk: Face, Age, and Gender Detection")
+st.title("Self Kiosk with AI Assistant")
 
-uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
+st.header("Welcome to the Self Kiosk")
+st.write("Ask me anything!")
 
-if uploaded_file is not None:
-    # Read the image
-    image = np.array(cv2.imdecode(np.frombuffer(uploaded_file.read(), np.uint8), cv2.IMREAD_COLOR))
+# User input
+user_input = st.text_input("You:", "")
+
+if user_input:
+    # Get the response from the chatbot
+    response = chatbot_response(user_input)
     
-    # Display the uploaded image
-    st.image(image, channels="RGB", caption="Uploaded Image", use_column_width=True)
+    # Display the response
+    st.write(f"Assistant: {response}")
 
-    # Predict age and gender
-    age, gender = predict_age_gender(image)
-
-    # Display the results
-    st.write(f"Detected Age: {age} years")
-    st.write(f"Detected Gender: {gender}")
 
 
