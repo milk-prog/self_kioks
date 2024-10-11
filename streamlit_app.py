@@ -46,6 +46,3 @@ else:
     st.write("Click the button to start the camera.")
 
 
-
-
-
