@@ -1,35 +1,51 @@
 import streamlit as st
 
-# Function to simulate AI response
-def get_ai_response(user_input):
-    # Replace this with actual AI response logic or API call
-    return f"AI: You said '{user_input}'"
-
-# Set up the Streamlit app
+# Title and instructions
 st.title("Self-Service Kiosk")
-st.write("Welcome to the self-service kiosk! Ask me anything.")
+st.write("Welcome! Please follow the instructions to complete your order.")
 
-# Create a chat history list in session state
-if 'chat_history' not in st.session_state:
-    st.session_state.chat_history = []
+# Step 1: Input user details
+st.header("Step 1: Enter your details")
+name = st.text_input("Enter your name:")
+email = st.text_input("Enter your email:")
 
-# Input field for user messages
-user_input = st.text_input("Type your message:", "")
+# Step 2: Select items from a menu
+st.header("Step 2: Select your items")
+menu_items = {
+    "Coffee": 3.00,
+    "Tea": 2.50,
+    "Sandwich": 5.00,
+    "Salad": 4.50,
+    "Water": 1.00
+}
 
-# On submit, get AI response and update chat history
-if st.button("Send"):
-    if user_input:
-        ai_response = get_ai_response(user_input)
-        st.session_state.chat_history.append({"user": user_input, "ai": ai_response})
+# Multi-select box for the menu items
+selected_items = st.multiselect("Select items to add to your order", list(menu_items.keys()))
 
-# Display chat history
-st.sidebar.header("Chat History")
-for chat in st.session_state.chat_history:
-    st.sidebar.write(f"You: {chat['user']}")
-    st.sidebar.write(f"{chat['ai']}")
+# Calculate total cost
+total_cost = sum(menu_items[item] for item in selected_items)
 
-# Optional: Clear chat history button
-if st.sidebar.button("Clear Chat History"):
-    st.session_state.chat_history.clear()
-    st.sidebar.write("Chat history cleared.")
+# Step 3: Display the total cost and confirmation
+st.header("Step 3: Review your order")
+
+if selected_items:
+    st.write("You have selected the following items:")
+    for item in selected_items:
+        st.write(f"{item}: ${menu_items[item]:.2f}")
+    st.write(f"**Total Cost: ${total_cost:.2f}**")
+
+    # Order confirmation button
+    if st.button("Confirm Order"):
+        if name and email:
+            st.success(f"Thank you for your order, {name}! Your total is ${total_cost:.2f}.")
+        else:
+            st.error("Please enter your name and email to proceed.")
+else:
+    st.write("No items selected yet.")
+
+# Optional: Add a reset button to clear inputs
+if st.button("Reset"):
+    st.experimental_rerun()
+
+
 
