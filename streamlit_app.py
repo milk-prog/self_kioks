@@ -1,53 +1,35 @@
 import streamlit as st
 
-# Title
+# Function to simulate AI response
+def get_ai_response(user_input):
+    # Replace this with actual AI response logic or API call
+    return f"AI: You said '{user_input}'"
+
+# Set up the Streamlit app
 st.title("Self-Service Kiosk")
+st.write("Welcome to the self-service kiosk! Ask me anything.")
 
-# Function to take order
-def take_order():
-    st.header("Place Your Order")
+# Create a chat history list in session state
+if 'chat_history' not in st.session_state:
+    st.session_state.chat_history = []
 
-    # Menu items
-    menu = {
-        "Coffee": 5.00,
-        "Tea": 3.00,
-        "Sandwich": 7.00,
-        "Salad": 6.00,
-        "Muffin": 2.50
-    }
+# Input field for user messages
+user_input = st.text_input("Type your message:", "")
 
-    # Order form
-    order = {}
-    for item, price in menu.items():
-        order[item] = st.number_input(f"{item} (${price})", 0, 10, step=1)
+# On submit, get AI response and update chat history
+if st.button("Send"):
+    if user_input:
+        ai_response = get_ai_response(user_input)
+        st.session_state.chat_history.append({"user": user_input, "ai": ai_response})
 
-    # Calculate total
-    total = sum(order[item] * price for item, price in menu.items())
-    st.write(f"Total: ${total:.2f}")
+# Display chat history
+st.sidebar.header("Chat History")
+for chat in st.session_state.chat_history:
+    st.sidebar.write(f"You: {chat['user']}")
+    st.sidebar.write(f"{chat['ai']}")
 
-    # Submit button
-    if st.button("Submit Order"):
-        st.write("Order Submitted!")
-        st.write(order)
-        st.write(f"Total: ${total:.2f}")
-
-# Main application
-def main():
-    st.sidebar.title("Self-Service Kiosk")
-    option = st.sidebar.selectbox("Select an option", ("Order", "About"))
-
-    if option == "Order":
-        take_order()
-    elif option == "About":
-        st.header("About This Kiosk")
-        st.write("""
-        This is a simple self-service kiosk application built with Streamlit.
-        You can place your order using the 'Order' section and learn more about
-        the application in the 'About' section.
-        """)
-
-if __name__ == "__main__":
-    main()
-
-
+# Optional: Clear chat history button
+if st.sidebar.button("Clear Chat History"):
+    st.session_state.chat_history.clear()
+    st.sidebar.write("Chat history cleared.")
 
