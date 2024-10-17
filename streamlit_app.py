@@ -16,8 +16,8 @@ menu_items = {
     "Fries": 2.50,
     "Pizza": 5.00,
     "Milkshake": 4.50,
-    "Water": 1.00
-    "Soft Drinks": 2.50
+    "Water": 1.00,
+    "Soft Drinks": 2.50,
     "Iced Tea":2.50
 }
 
