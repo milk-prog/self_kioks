@@ -62,8 +62,8 @@ def get_bot_response(user_input):
     elif "fries" in user_input:
         return "Our fries are crispy and available in regular or large sizes."
     elif "drink" in user_input:
-        return "We offer soft drinks, milkshakes, iced tea and water. What's your favorite?"
-    elif "opening hours" in user_input:
+        return "We offer soft drinks, milkshakes, and iced tea. What's your favorite?"
+    elif "hours" in user_input:
         return "We are open from 10 AM to 10 PM, seven days a week."
     elif "bye" in user_input or "thank you" in user_input:
         return "Thanks for visiting! Have a great day!"
@@ -73,7 +73,7 @@ def get_bot_response(user_input):
 # Sidebar Chatbox
 st.sidebar.title("Fast Food Chatbot")
 if 'chat_history' not in st.session_state:
-    st.session_state['chat_history'] = ""  # Store chat history
+    st.session_state['chat_history'] = ""  # Initialize chat history
 
 # Display previous conversation
 chat_history = st.sidebar.text_area("Chat History", st.session_state['chat_history'], height=300)
@@ -91,6 +91,10 @@ if st.sidebar.button("Send"):
         
         # Update chat history display
         chat_history = st.sidebar.text_area("Chat History", st.session_state['chat_history'], height=300)
+
+# Button to reset chat history
+if st.sidebar.button("Reset Chat"):
+    st.session_state['chat_history'] = ""  # Clear chat history
 
 
 
