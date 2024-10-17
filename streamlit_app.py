@@ -63,7 +63,7 @@ def get_bot_response(user_input):
         return "Our fries are crispy and available in regular or large sizes."
     elif "drink" in user_input:
         return "We offer soft drinks, milkshakes, iced tea and water. What's your favorite?"
-    elif "hours" in user_input:
+    elif "opening hours" in user_input:
         return "We are open from 10 AM to 10 PM, seven days a week."
     elif "bye" in user_input or "thank you" in user_input:
         return "Thanks for visiting! Have a great day!"
