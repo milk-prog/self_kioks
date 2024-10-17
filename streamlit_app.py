@@ -12,11 +12,13 @@ email = st.text_input("Enter your email:")
 # Step 2: Select items from a menu
 st.header("Step 2: Select your items")
 menu_items = {
-    "Coffee": 3.00,
-    "Tea": 2.50,
-    "Sandwich": 5.00,
-    "Salad": 4.50,
+    "Burger": 3.00,
+    "Fries": 2.50,
+    "Pizza": 5.00,
+    "Milkshake": 4.50,
     "Water": 1.00
+    "Soft Drinks": 2.50
+    "Iced Tea":2.50
 }
 
 # Multi-select box for the menu items
@@ -60,7 +62,7 @@ def get_bot_response(user_input):
     elif "fries" in user_input:
         return "Our fries are crispy and available in regular or large sizes."
     elif "drink" in user_input:
-        return "We offer soft drinks, milkshakes, and iced tea. What's your favorite?"
+        return "We offer soft drinks, milkshakes, iced tea and water. What's your favorite?"
     elif "hours" in user_input:
         return "We are open from 10 AM to 10 PM, seven days a week."
     elif "bye" in user_input or "thank you" in user_input:
