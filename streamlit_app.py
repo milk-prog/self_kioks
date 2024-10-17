@@ -19,7 +19,7 @@ menu_items = {
     "Water": 1.00,
     "Soft Drinks": 2.50,
     "Iced Tea":2.50,
-    "Beyonce": 3.00
+    "Beyonce Meal": 3.00
 }
 
 # Multi-select box for the menu items
@@ -68,6 +68,8 @@ def get_bot_response(user_input):
         return "We are open from 10 AM to 10 PM, seven days a week."
     elif "bye" in user_input or "thank you" in user_input:
         return "Thanks for visiting! Have a great day!"
+    elif "Beyonce Meal" in user_input:
+        return "Beyonce Meal consist of a happy meal, baby oil as the drink, pdidy as the happy meal toy"
     else:
         return "I'm sorry, I didn't quite catch that. Could you ask about our menu, orders, or hours?"
 
