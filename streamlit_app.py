@@ -47,16 +47,48 @@ else:
 if st.button("Reset"):
     st.experimental_rerun()
 
+# Fast food chatbot response logic
+def get_bot_response(user_input):
+    user_input = user_input.lower()
+
+    if "menu" in user_input:
+        return "Our menu includes burgers, fries, pizzas, and milkshakes!"
+    elif "burger" in user_input:
+        return "Our burgers come with cheese, lettuce, and tomato. You can add bacon or extra toppings!"
+    elif "order" in user_input:
+        return "You can place an order for pickup or delivery. How would you like to proceed?"
+    elif "fries" in user_input:
+        return "Our fries are crispy and available in regular or large sizes."
+    elif "drink" in user_input:
+        return "We offer soft drinks, milkshakes, and iced tea. What's your favorite?"
+    elif "hours" in user_input:
+        return "We are open from 10 AM to 10 PM, seven days a week."
+    elif "bye" in user_input or "thank you" in user_input:
+        return "Thanks for visiting! Have a great day!"
+    else:
+        return "I'm sorry, I didn't quite catch that. Could you ask about our menu, orders, or hours?"
+
 # Sidebar Chatbox
-st.sidebar.title("Chatbox")
-messages = st.sidebar.text_area("Your conversation will appear here:")
+st.sidebar.title("Fast Food Chatbot")
+if 'chat_history' not in st.session_state:
+    st.session_state['chat_history'] = ""  # Store chat history
+
+# Display previous conversation
+chat_history = st.sidebar.text_area("Chat History", st.session_state['chat_history'], height=300)
 
 # Input for new messages
-new_message = st.sidebar.text_input("Type a message", "")
+new_message = st.sidebar.text_input("You:", "")
 if st.sidebar.button("Send"):
     if new_message:
-        messages += f"\nYou: {new_message}"
-        st.sidebar.text_area("Your conversation will appear here:", messages)
+        # Add user message to chat history
+        st.session_state['chat_history'] += f"\nYou: {new_message}"
+        
+        # Get bot response
+        bot_response = get_bot_response(new_message)
+        st.session_state['chat_history'] += f"\nBot: {bot_response}"
+        
+        # Update chat history display
+        chat_history = st.sidebar.text_area("Chat History", st.session_state['chat_history'], height=300)
 
 
 
