@@ -18,7 +18,8 @@ menu_items = {
     "Milkshake": 4.50,
     "Water": 1.00,
     "Soft Drinks": 2.50,
-    "Iced Tea":2.50
+    "Iced Tea":2.50,
+    "Beyonce": 3.00
 }
 
 # Multi-select box for the menu items
