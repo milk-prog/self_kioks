@@ -58,9 +58,6 @@ if st.sidebar.button("Send"):
         messages += f"\nYou: {new_message}"
         st.sidebar.text_area("Your conversation will appear here:", messages)
 
-# Main content of the app
-st.title("Main Application Content")
-st.write("This is the main content of the application.")
 
 
 
