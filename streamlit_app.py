@@ -47,5 +47,20 @@ else:
 if st.button("Reset"):
     st.experimental_rerun()
 
+# Sidebar Chatbox
+st.sidebar.title("Chatbox")
+messages = st.sidebar.text_area("Your conversation will appear here:")
+
+# Input for new messages
+new_message = st.sidebar.text_input("Type a message", "")
+if st.sidebar.button("Send"):
+    if new_message:
+        messages += f"\nYou: {new_message}"
+        st.sidebar.text_area("Your conversation will appear here:", messages)
+
+# Main content of the app
+st.title("Main Application Content")
+st.write("This is the main content of the application.")
+
 
 
