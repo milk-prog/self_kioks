@@ -67,7 +67,7 @@ def get_bot_response(user_input):
     elif "opening hours" in user_input:
         return "We are open from 10 AM to 10 PM, seven days a week."
     elif "beyonce meal" in user_input:
-        return "beyonce Meal consist of a happy meal, baby oil as the drink, pdidy as the happy meal toy."
+        return "beyonce meal consist of a happy meal, baby oil as the drink, pdidy as the happy meal toy."
     elif "bye" in user_input or "thank you" in user_input:
         return "Thanks for visiting! Have a great day!"
     else:
