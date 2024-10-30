@@ -1,5 +1,10 @@
 import streamlit as st
 
+# Function to get bot responses
+def get_bot_response(message):
+    # Placeholder for bot response logic
+    return "I'm sorry, I don't have an answer for that."
+
 # Title and instructions
 st.title("Self-Service Kiosk")
 st.write("Welcome! Please follow the instructions to complete your order.")
@@ -26,14 +31,13 @@ menu_items = {
 menu_images = {
     "Burger": "https://www.thecookierookie.com/wp-content/uploads/2023/04/featured-stovetop-burgers-recipe.jpg",
     "Fries": "https://cdn.sanity.io/images/g1s4qnmz/production/82694af53c1e85caca322e435067067806223518-2500x2500.jpg",
-    "Pizza": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Neapolitan_pizza.jpg",  # Valid pizza image
+    "Pizza": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Neapolitan_pizza.jpg",
     "Milkshake": "https://thebigmansworld.com/wp-content/uploads/2024/06/protein-milkshake-recipe.jpg",
     "Water": "https://images.thdstatic.com/productImages/2c12c804-7728-4112-9a79-d3dbb0c33548/svn/dasani-water-049000026566-64_600.jpg",
-    "Soft Drinks": "https://upload.wikimedia.org/wikipedia/commons/3/32/Coca-Cola_Logo.svg",  # Example logo for soft drinks
-    "Iced Tea": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Iced_Tea.png",  # Example iced tea image
+    "Soft Drinks": "https://upload.wikimedia.org/wikipedia/commons/0/0b/Coca-Cola_Logo.svg",  # Updated to an actual drink image
+    "Iced Tea": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Iced_Tea.png",
     "Beyonce Meal": "https://i.abcnewsfe.com/a/b8916d79-a2f2-4e47-9de8-5591b2e91b23/beyonce-mo_1729909966498_hpMain.jpg"
 }
-
 
 # Multi-select box for the menu items
 selected_items = st.multiselect("Select items to add to your order", list(menu_items.keys()))
@@ -62,7 +66,7 @@ else:
 
 # Optional: Add a reset button to clear inputs
 if st.button("Reset"):
-    st.experimental_rerun()
+    st.session_state.clear()  # Clear all session state variables
 
 # Sidebar Chatbox
 st.sidebar.title("Fast Food Chatbot")
