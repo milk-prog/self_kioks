@@ -63,6 +63,33 @@ else:
 if st.button("Reset"):
     st.experimental_rerun()
 
+# Sidebar Chatbox
+st.sidebar.title("Fast Food Chatbot")
+if 'chat_history' not in st.session_state:
+    st.session_state['chat_history'] = ""  # Initialize chat history
+
+# Display previous conversation
+chat_history = st.sidebar.text_area("Chat History", st.session_state['chat_history'], height=300)
+
+# Input for new messages
+new_message = st.sidebar.text_input("You:", "")
+if st.sidebar.button("Send"):
+    if new_message:
+        # Add user message to chat history
+        st.session_state['chat_history'] += f"\nYou: {new_message}"
+        
+        # Get bot response
+        bot_response = get_bot_response(new_message)
+        st.session_state['chat_history'] += f"\nBot: {bot_response}"
+        
+        # Update chat history display
+        chat_history = st.sidebar.text_area("Chat History", st.session_state['chat_history'], height=300)
+
+# Button to reset chat history
+if st.sidebar.button("Reset Chat"):
+    st.session_state['chat_history'] = ""  # Clear chat history
+
+
 
 
 
