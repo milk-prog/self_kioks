@@ -1,10 +1,5 @@
 import streamlit as st
 
-# Function to get bot responses
-def get_bot_response(message):
-    # Placeholder for bot response logic
-    return "I'm sorry, I don't have an answer for that."
-
 # Title and instructions
 st.title("Self-Service Kiosk")
 st.write("Welcome! Please follow the instructions to complete your order.")
@@ -23,20 +18,8 @@ menu_items = {
     "Milkshake": 4.50,
     "Water": 1.00,
     "Soft Drinks": 2.50,
-    "Iced Tea": 2.50,
+    "Iced Tea":2.50,
     "Beyonce Meal": 3.00
-}
-
-# Image paths for each item
-menu_images = {
-    "Burger": "https://www.thecookierookie.com/wp-content/uploads/2023/04/featured-stovetop-burgers-recipe.jpg",
-    "Fries": "https://cdn.sanity.io/images/g1s4qnmz/production/82694af53c1e85caca322e435067067806223518-2500x2500.jpg",
-    "Pizza": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Neapolitan_pizza.jpg",
-    "Milkshake": "https://thebigmansworld.com/wp-content/uploads/2024/06/protein-milkshake-recipe.jpg",
-    "Water": "https://images.thdstatic.com/productImages/2c12c804-7728-4112-9a79-d3dbb0c33548/svn/dasani-water-049000026566-64_600.jpg",
-    "Soft Drinks": "https://upload.wikimedia.org/wikipedia/commons/0/0b/Coca-Cola_Logo.svg",  # Updated to an actual drink image
-    "Iced Tea": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Iced_Tea.png",
-    "Beyonce Meal": "https://i.abcnewsfe.com/a/b8916d79-a2f2-4e47-9de8-5591b2e91b23/beyonce-mo_1729909966498_hpMain.jpg"
 }
 
 # Multi-select box for the menu items
@@ -45,14 +28,13 @@ selected_items = st.multiselect("Select items to add to your order", list(menu_i
 # Calculate total cost
 total_cost = sum(menu_items[item] for item in selected_items)
 
-# Step 3: Display the total cost, selected items, and their images
+# Step 3: Display the total cost and confirmation
 st.header("Step 3: Review your order")
 
 if selected_items:
     st.write("You have selected the following items:")
     for item in selected_items:
         st.write(f"{item}: ${menu_items[item]:.2f}")
-        st.image(menu_images[item], width=150, caption=item)  # Display image for each selected item
     st.write(f"**Total Cost: ${total_cost:.2f}**")
 
     # Order confirmation button
@@ -66,7 +48,30 @@ else:
 
 # Optional: Add a reset button to clear inputs
 if st.button("Reset"):
-    st.session_state.clear()  # Clear all session state variables
+    st.experimental_rerun()
+
+# Fast food chatbot response logic
+def get_bot_response(user_input):
+    user_input = user_input.lower()
+
+    if "menu" in user_input:
+        return "Our menu includes burgers, fries, pizzas, drinks and beyonce meal!"
+    elif "burger" in user_input:
+        return "Our burgers come with cheese, lettuce, and tomato. You can add bacon or extra toppings!"
+    elif "order" in user_input:
+        return "You can place an order for pickup or delivery. How would you like to proceed?"
+    elif "fries" in user_input:
+        return "Our fries are crispy and available in regular or large sizes."
+    elif "drink" in user_input:
+        return "We offer soft drinks, milkshakes, and iced tea. What's your favorite?"
+    elif "opening hours" in user_input:
+        return "We are open from 10 AM to 10 PM, seven days a week."
+    elif "beyonce meal" in user_input:
+        return "beyonce meal consist of a happy meal, baby oil as the drink, pdidy as the happy meal toy."
+    elif "bye" in user_input or "thank you" in user_input:
+        return "Thanks for visiting! Have a great day!"
+    else:
+        return "I'm sorry, I didn't quite catch that. Could you ask about our menu, orders, or hours?"
 
 # Sidebar Chatbox
 st.sidebar.title("Fast Food Chatbot")
@@ -93,8 +98,5 @@ if st.sidebar.button("Send"):
 # Button to reset chat history
 if st.sidebar.button("Reset Chat"):
     st.session_state['chat_history'] = ""  # Clear chat history
-
-
-
 
 
